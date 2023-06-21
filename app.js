@@ -1,20 +1,26 @@
 // Imports
-const cors = require('cors');
-const express = require('express');
-
-const path = require('path');
+const cors = require("cors");
+const express = require("express");
+const path = require("path");
 
 const app = express();
 
-// Middlewares
-// TODO: Implementar middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use('/api', require('./routes/reserva.routes'));
+app.use("/api", require("./routes/reserva.routes"));
 
-// TODO: Si la petición no coincide con ninguna de las rutas declaradas, mostrar error 404
+// Error 404: Ruta no encontrada
+app.use((req, res, next) => {
+  res.status(404).json({ error: "404 - Not Found" });
+});
 
 // Starting the server
-app.listen(45635, () => console.log('Server on port xxxx'));
+const port = process.env.PORT || 3000; // Lee el puerto desde la variable de entorno o utiliza el puerto 3000 por defecto
+app.listen(port, () =>
+  console.log(`Servidor corriendo en http://localhost:${port}`)
+);
