@@ -1,6 +1,6 @@
 const express = require("express");
 const Sequelize = require("sequelize");
-const app = express();
+const database = express();
 
 const sequelize = new Sequelize("reserva.db", "root", "", {
   host: "localhost",
